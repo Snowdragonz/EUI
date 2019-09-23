@@ -1,8 +1,17 @@
 package sample;
 
+import javafx.scene.image.Image;
+
 public class PasswordStrength {
-    public String determinePasswordStrength()
+
+    public static Image determinePasswordStrengthImage(String password)
     {
-        return "test";
+        int passwordLength;
+        boolean hasLowerChar = false;
+        boolean hasUpperChar = false;
+        boolean hasNumbers = false;
+        boolean hasSpecialCharacters = false;
+        Image passwordStrengthBar = new Image(passwordGenerator.class.getResourceAsStream("White.png"));
+        return passwordStrengthBar;
     }
 }
