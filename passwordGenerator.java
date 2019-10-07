@@ -46,7 +46,7 @@ public class passwordGenerator
 
     public static String generateSpecialCharactersOnlyPassword(int size)
     {
-        String characterBank = "`~!@#$%^&*()-_=+[{]};:',<.>/?|" + '\\' + '\"';
+        String characterBank = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
         StringBuilder generatedPassword = new StringBuilder(size);
         for (int i = 0; i < size; i++) {
             double doubleIndex = (characterBank.length() * Math.random());
@@ -135,7 +135,7 @@ public class passwordGenerator
     public static String generateLowerandSpecialOnlyPassword(int size)
     {
         String characterBank = "abcdefghijklmnopqrstuvwxyz"
-                + "`~!@#$%^&*()-_=+[{]};:',<.>/?|" + '\\' + '\"';
+                + " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 
         StringBuilder generatedPassword = new StringBuilder(size);
         for (int i = 0; i < size; i++)
@@ -149,7 +149,7 @@ public class passwordGenerator
     public static String generateUpperLettersAndSpecialOnlyPassword(int size)
     {
         String characterBank = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                + "`~!@#$%^&*()-_=+[{]};:',<.>/?|" + '\\' + '\"';
+                + " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 
         StringBuilder generatedPassword = new StringBuilder(size);
         for (int i = 0; i < size; i++)
@@ -163,7 +163,7 @@ public class passwordGenerator
     public static String generateNumbersAndSpecialOnlyPassword(int size)
     {
         String characterBank = "0123456789"
-                + "`~!@#$%^&*()-_=+[{]};:',<.>/?|" + '\\' + '\"';
+                + " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 
         StringBuilder generatedPassword = new StringBuilder(size);
         for (int i = 0; i < size; i++)
@@ -178,7 +178,7 @@ public class passwordGenerator
     {
         String characterBank = "abcdefghijklmnopqrstuvwxyz"
                 + "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                + "`~!@#$%^&*()-_=+[{]};:',<.>/?|" + '\\' + '\"';
+                + " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 
         StringBuilder generatedPassword = new StringBuilder(size);
         for (int i = 0; i < size; i++)
@@ -193,7 +193,7 @@ public class passwordGenerator
     {
         String characterBank = "abcdefghijklmnopqrstuvwxyz"
                 + "0123456789"
-                + "`~!@#$%^&*()-_=+[{]};:',<.>/?|" + '\\' + '\"';
+                + " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 
         StringBuilder generatedPassword = new StringBuilder(size);
         for (int i = 0; i < size; i++)
@@ -208,7 +208,7 @@ public class passwordGenerator
     {
         String characterBank = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 + "0123456789"
-                + "`~!@#$%^&*()-_=+[{]};:',<.>/?|" + '\\' + '\"';
+                + " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 
         StringBuilder generatedPassword = new StringBuilder(size);
         for (int i = 0; i < size; i++)
@@ -224,7 +224,7 @@ public class passwordGenerator
         String characterBank = "abcdefghijklmnopqrstuvwxyz"
                 + "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 + "0123456789"
-                + "`~!@#$%^&*()-_=+[{]};:',<.>/?|" + '\\' + '\"';
+                + " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 
         StringBuilder generatedPassword = new StringBuilder(size);
         for (int i = 0; i < size; i++)

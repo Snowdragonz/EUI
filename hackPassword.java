@@ -1,10 +1,215 @@
 package sample;
 
+import java.io.File;
+import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+
 public class hackPassword {
 
-    public String bruteForce(String password)
-    {
-        return "testsdfasdfgasdfgadfg";
+    public static char[] charArray, endBruteForceArray;
+    public static int intArray[];
+    public static char bit, bit0, bit1, bit2, bit3, bit4;
+    public static int ascii, ascii0, ascii1, ascii2, ascii3, ascii4, charArrayLegnth;
+    public static String startBruteForce, endBruteForceString, newKey, currentKey;
+    public static long startTime, endTime;
 
+    public static String bruteForce(String password) {
+        startTime = System.currentTimeMillis();
+        charArrayLegnth = password.length();
+        charArray = new char[charArrayLegnth];
+        intArray = new int[charArrayLegnth];
+        endBruteForceArray = new char[charArrayLegnth];
+
+        for (int i = 0; i < charArrayLegnth; i++) {
+            charArray[i] = ' ';
+        }
+        currentKey = new String(endBruteForceArray);
+
+        for (int i = 0; i < charArrayLegnth; i++) {
+            endBruteForceArray[i] = '~';
+        }
+        endBruteForceString = new String(endBruteForceArray);
+
+
+        while (currentKey != endBruteForceString && (currentKey.compareTo(password) != 0)) {
+            for (int i = 0; i < charArrayLegnth; i++) {
+                bit = charArray[i];
+                ascii = (int) bit;
+                intArray[i] = ascii;
+            }
+
+            if (intArray[0] == 126) {
+                intArray[0] = 32;
+                if (intArray[1] == 126) {
+                    intArray[1] = 32;
+                    if (intArray[2] == 126) {
+                        intArray[2] = 32;
+                        if (intArray[3] == 126) {
+                            intArray[3] = 32;
+                            if (intArray[4] == 126) {
+                                intArray[4] = 32;
+                            }
+                          /*
+                          if (intArray[5] == 126)
+                             {intArray[5] = 32;
+                             if (intArray[6] == 126)
+                                {intArray[6] = 32;
+                                if (intArray[7] == 126)
+                                   {intArray[7] = 32;
+                                   if (intArray[8] == 126)
+                                      {intArray[8] = 32;
+                                      if (intArray[9] == 126)
+                                         {intArray[9] = 32;}
+                                      else {intArray[9]++;}}
+                                   else {intArray[8]++;}}
+                                else {intArray[7]++;}}
+                             else {intArray[6]++;}}
+                          else {intArray[5]++;}}
+                          */
+                            else {
+                                intArray[4]++;
+                            }
+                        } else {
+                            intArray[3]++;
+                        }
+                    } else {
+                        intArray[2]++;
+                    }
+                } else {
+                    intArray[1]++;
+                }
+            } else {
+                intArray[0]++;
+            }
+
+            for (int i = 0; i < charArrayLegnth; i++) {
+                ascii = intArray[i];
+                bit = (char) ascii;
+                charArray[i] = bit;
+            }
+            newKey = new String(charArray);
+            currentKey = newKey;
+            System.out.println(currentKey);
+        }
+        endTime = System.currentTimeMillis();
+
+        //System.out.println("Time To Brake Password: " + (endTime - startTime) + "ms");
+        return "currentKey";
+
+    }
+
+    public static long bruteForceTime(String password) {
+        startTime = System.currentTimeMillis();
+        charArrayLegnth = password.length();
+        charArray = new char[charArrayLegnth];
+        intArray = new int[charArrayLegnth];
+        endBruteForceArray = new char[charArrayLegnth];
+
+        for (int i = 0; i < charArrayLegnth; i++) {
+            charArray[i] = ' ';
+        }
+        currentKey = new String(endBruteForceArray);
+
+        for (int i = 0; i < charArrayLegnth; i++) {
+            endBruteForceArray[i] = '~';
+        }
+        endBruteForceString = new String(endBruteForceArray);
+
+
+        while (currentKey != endBruteForceString && (currentKey.compareTo(password) != 0)) {
+            for (int i = 0; i < charArrayLegnth; i++) {
+                bit = charArray[i];
+                ascii = (int) bit;
+                intArray[i] = ascii;
+            }
+
+            if (intArray[0] == 126) {
+                intArray[0] = 32;
+                if (intArray[1] == 126) {
+                    intArray[1] = 32;
+                    if (intArray[2] == 126) {
+                        intArray[2] = 32;
+                        if (intArray[3] == 126) {
+                            intArray[3] = 32;
+                            if (intArray[4] == 126) {
+                                intArray[4] = 32;
+                            }
+                          /*
+                          if (intArray[5] == 126)
+                             {intArray[5] = 32;
+                             if (intArray[6] == 126)
+                                {intArray[6] = 32;
+                                if (intArray[7] == 126)
+                                   {intArray[7] = 32;
+                                   if (intArray[8] == 126)
+                                      {intArray[8] = 32;
+                                      if (intArray[9] == 126)
+                                         {intArray[9] = 32;}
+                                      else {intArray[9]++;}}
+                                   else {intArray[8]++;}}
+                                else {intArray[7]++;}}
+                             else {intArray[6]++;}}
+                          else {intArray[5]++;}}
+                          */
+                            else {
+                                intArray[4]++;
+                            }
+                        } else {
+                            intArray[3]++;
+                        }
+                    } else {
+                        intArray[2]++;
+                    }
+                } else {
+                    intArray[1]++;
+                }
+            } else {
+                intArray[0]++;
+            }
+
+            for (int i = 0; i < charArrayLegnth; i++) {
+                ascii = intArray[i];
+                bit = (char) ascii;
+                charArray[i] = bit;
+            }
+            newKey = new String(charArray);
+            currentKey = newKey;
+            //System.out.println(currentKey);
+        }
+        endTime = System.currentTimeMillis();
+
+        //System.out.println("Time To Brake Password: " + (startTime - endTime) + "ms");
+        return (endTime - startTime);
+
+    }
+
+    public static void CalcuateTimeToBrake(String password) throws FileNotFoundException, UnsupportedEncodingException
+    {
+        long time;
+        PrintWriter writer = new PrintWriter("Estimate.txt", "UTF-8");
+            for (int i = 0; i < 1000; i++)
+            {
+                time = bruteForceTime(password);
+                System.out.println(time);
+                writer.println(time + "ms");
+            }
+            writer.close();
+    }
+
+    public static void EstimateTimeToBrake(String password)
+    {
+        boolean containsLower, containsUpper, containsNumber, containsSpecChar;
+        int EArrayLength = password.length();
+        char[] analysisCharArray;
+        analysisCharArray = password.toCharArray();
+
+        for (int i = 0; i < EArrayLength; i++)
+        {
+            for (int j = 0; j < EArrayLength; j++)
+            {
+
+            }
+        }
     }
 }
