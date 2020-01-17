@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.*;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class hackPassword {
 
@@ -13,6 +15,7 @@ public class hackPassword {
     public static int ascii, ascii0, ascii1, ascii2, ascii3, ascii4, charArrayLegnth;
     public static String startBruteForce, endBruteForceString, newKey, currentKey;
     public static long startTime, endTime;
+    public static int counter = 1;
 
     public static String bruteForce(String password) {
         startTime = System.currentTimeMillis();
@@ -118,6 +121,7 @@ public class hackPassword {
 
 
         while (currentKey != endBruteForceString && (currentKey.compareTo(password) != 0)) {
+            System.out.println(currentKey + " " + counter);
             for (int i = 0; i < charArrayLegnth; i++) {
                 bit = charArray[i];
                 ascii = (int) bit;
@@ -175,8 +179,12 @@ public class hackPassword {
             }
             newKey = new String(charArray);
             currentKey = newKey;
-            //System.out.println(currentKey);
+            //System.out.println(currentKey + " " + counter);
+            counter++;
         }
+        //System.out.println(counter);
+        System.out.println(currentKey + " " + counter);
+        counter = 1;
         endTime = System.currentTimeMillis();
 
         //System.out.println("Time To Brake Password: " + (startTime - endTime) + "ms");
@@ -188,11 +196,12 @@ public class hackPassword {
     {
         long time;
         PrintWriter writer = new PrintWriter("Estimate.txt", "UTF-8");
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 10; i++)
             {
                 time = bruteForceTime(password);
-                System.out.println(time);
-                writer.println(time + "ms");
+                //System.out.println(time);
+                writer.println(time);
+                //writer.println(time + "ms");
             }
             writer.close();
     }
@@ -211,5 +220,37 @@ public class hackPassword {
 
             }
         }
+    }
+
+    // File can be referenced from https://sinister.ly/Thread-14-Million-Password-List
+    public static String dictionaryAttack(String password) throws FileNotFoundException
+    {
+        startTime = System.currentTimeMillis();
+        String passwordFound = "";
+        try
+        {
+            ArrayList<String> searchArray = new ArrayList<String>();
+            Scanner scan = new Scanner(new File("14millionpass.txt"));
+            while (scan.hasNextLine()) {
+                searchArray.add(scan.nextLine());
+            }
+            scan.close();
+
+            for(int i = 0; i < searchArray.size(); i++)
+            {
+                if (searchArray.get(i).equals(password))
+                {
+                    passwordFound = searchArray.get(i);
+                    break;
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            System.out.println("File not Found");
+        }
+        endTime = System.currentTimeMillis();
+        System.out.println(endTime - startTime);
+        return passwordFound;
     }
 }
