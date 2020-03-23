@@ -1,5 +1,21 @@
 package sample;
 
+/**
+ * <h1> Encryption GUI</h1>
+ * @Author Tony Tipton
+ * @since 3/23/2020
+ *
+ * The EncryptionGUI program implements an application graphical user interface that has several components for users to generate, analyze, and translate
+ * passwords, phrases, and hash functions for their needs. There are several sections to the GUI that can be shorted down to 1. Password Generation Section
+ * 2. Encryption Translation Section, 3. Password Hacking Section, 4. Phrase to Password Tool Section. The Password Generation Section features a process
+ * that allows a user to generate a password with letters, symbols, and digits that can be randomized or customized. The Encryption Translation Section
+ * features options to produce a one way hashed of a generated password to observe the functionality of one way hash algorithms. The Password Hacking Section
+ * features two primary password hacking methods. Brute force checks every possible combination of characters on the standard English keyboard up until
+ * a password length of 10 characters. Dictionary attack utilizes a dictionary located in the source folder of the program that checks password against words
+ * found in a dictionary. The Phrase to Password Tool Section features a tool that when inputted a phrase, will generate a memorable Leet speak password for the user.
+ *
+ */
+// Import libraries for use
 import javafx.application.Application;
 import javafx.scene.control.*;
 import javafx.geometry.Insets;
@@ -11,21 +27,22 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
-
-import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
+import javafx.geometry.Pos;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import javafx.scene.image.Image;
-import javafx.scene.layout.StackPane;
-import javafx.scene.text.Font;
 import javafx.scene.text.*;
 
+/**
+ * Class EncryptionGUI primarily declares and implements all of the JavaFx components for the graphical user interface and all private,public,protected
+ * variables and methods needed to implement the functionality of the GUI. The class features the message() method which allows for the displaying of
+ * messages to the user when appropriate.
+ *
+ */
 public class EncryptionGUI extends Application {
 
+    // Global variables for class use
     private String password = "";
     private String hashedPassword = "";
     private String PWBrakeTimeEstimate = "0";
@@ -44,12 +61,19 @@ public class EncryptionGUI extends Application {
     private CheckBox numbers;
     private CheckBox specialCharacters;
 
-
+    /**
+     * This method is the driver method in starting the execution of the Java program and allows for the conversion to the JavaFX application startup.
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }
-
     @Override
+    /**
+     * the start() method is the start of the graphical user interface which allows the instantiation of the JavaFX application
+     * @param primaryStage This is the Stage argument needed to start the application graphical user interface.
+     * @return void This returns nothing
+     */
     public void start(Stage primaryStage)
     {
         // Application Window Section
@@ -75,8 +99,10 @@ public class EncryptionGUI extends Application {
         passwordTypesColumn2.setSpacing(5);
         Button generatePassword = new Button("Generate Password");
         Label currentPasswordLabel = new Label ("Current Password:  " + password);
-        Label passwordTimeToBrakeEstimate = new Label("Estimated Time To Break: " + PWBrakeTimeEstimate);
+        Label passwordTimeToBrakeEstimate = new Label("Estimated Time To Break: " + PWBrakeTimeEstimate + " seconds");
         Label passwordStrengthLabel = new Label("Password Strength:   ");
+        Label tryToBreakPW = new Label("Current Password:   ");
+        Label foundPW = new Label("Found Password:   ");
 
         // Generate Password Process
         generatePassword.setOnAction(e -> {
@@ -122,8 +148,10 @@ public class EncryptionGUI extends Application {
                         EncryptionGUI.message("Please select another combination of password characters");
                 }
                 currentPasswordLabel.setText("Current Password:  " + password);
-                passwordTimeToBrakeEstimate.setText("Estimated Time To Brake: " + PWBrakeTimeEstimate + " seconds");
-                passwordStrengthImage.setImage(PasswordStrength.determinePasswordStrengthImage(password));
+                PWBrakeTimeEstimate = PasswordStrength.determinePasswordStrength(password);
+                passwordTimeToBrakeEstimate.setText("Estimated Time To Brake: " + PWBrakeTimeEstimate);
+                //passwordStrengthImage.setImage(PasswordStrength.determinePasswordStrengthImage(password));
+                tryToBreakPW.setText("Current Password: " + password);
             }
             catch(NumberFormatException i)
             {
@@ -133,7 +161,7 @@ public class EncryptionGUI extends Application {
 
         // Hash Function Section
         ToggleGroup hashGroup = new ToggleGroup();
-        Text encryptionSectionText = new Text ("Encryption Type Selection");
+        Text encryptionSectionText = new Text ("One Way Hash Selection");
         encryptionSectionText.setFont(Font.font("Segoe UI",FontWeight.EXTRA_BOLD, 14));
         HBox encryptionSectionRow = new HBox();
         VBox encryptionSectionColumn1 = new VBox();
@@ -166,32 +194,46 @@ public class EncryptionGUI extends Application {
             {
                 hashedPassword = hashGenerator.getMD2(password);
                 currentPasswordHash.setText("Password Encrypted:  " + hashedPassword);
+                hashPWBrakeTimeEstimate = PasswordStrength.determinePasswordStrength(hashedPassword);
+                hashedPasswordTimeToBrakeEstimate.setText("Estimated Time To Break: " + hashPWBrakeTimeEstimate);
             }
-            if(encryption2.isSelected() && password.compareTo("") != 0)
+            else if(encryption2.isSelected() && password.compareTo("") != 0)
             {
                 hashedPassword = hashGenerator.getMD5(password);
                 currentPasswordHash.setText("Password Encrypted:  " + hashedPassword);
+                hashPWBrakeTimeEstimate = PasswordStrength.determinePasswordStrength(hashedPassword);
+                hashedPasswordTimeToBrakeEstimate.setText("Estimated Time To Break: " + hashPWBrakeTimeEstimate);
             }
-            if(encryption3.isSelected() && password.compareTo("") != 0)
+            else if(encryption3.isSelected() && password.compareTo("") != 0)
             {
                 hashedPassword = hashGenerator.getSHA1(password);
                 currentPasswordHash.setText("Password Encrypted:  " + hashedPassword);
+                hashPWBrakeTimeEstimate = PasswordStrength.determinePasswordStrength(hashedPassword);
+                hashedPasswordTimeToBrakeEstimate.setText("Estimated Time To Break: " + hashPWBrakeTimeEstimate);
             }
-            if(encryption4.isSelected() && password.compareTo("") != 0)
+            else if(encryption4.isSelected() && password.compareTo("") != 0)
             {
                 hashedPassword = hashGenerator.getSHA256(password);
                 currentPasswordHash.setText("Password Encrypted:  " + hashedPassword);
+                hashPWBrakeTimeEstimate = PasswordStrength.determinePasswordStrength(hashedPassword);
+                hashedPasswordTimeToBrakeEstimate.setText("Estimated Time To Break: " + hashPWBrakeTimeEstimate);
             }
-            if(encryption5.isSelected() && password.compareTo("") != 0)
+            else if(encryption5.isSelected() && password.compareTo("") != 0)
             {
                 hashedPassword = hashGenerator.getSHA384(password);
                 currentPasswordHash.setText("Password Encrypted:  " + hashedPassword);
+                hashPWBrakeTimeEstimate = PasswordStrength.determinePasswordStrength(hashedPassword);
+                hashedPasswordTimeToBrakeEstimate.setText("Estimated Time To Break: " + hashPWBrakeTimeEstimate);
             }
-            if(encryption6.isSelected() && password.compareTo("") != 0)
+            else if(encryption6.isSelected() && password.compareTo("") != 0)
             {
                 hashedPassword = hashGenerator.getSHA512(password);
                 currentPasswordHash.setText("Password Encrypted:  " + hashedPassword);
+                hashPWBrakeTimeEstimate = PasswordStrength.determinePasswordStrength(hashedPassword);
+                hashedPasswordTimeToBrakeEstimate.setText("Estimated Time To Break: " + hashPWBrakeTimeEstimate);
             }
+
+
         });
 
 
@@ -209,33 +251,20 @@ public class EncryptionGUI extends Application {
         pwBreak2.setToggleGroup(brakePW);
         pwBreak3.setToggleGroup(brakePW);
         pwBreakSectionColumn1.getChildren().addAll(pwBreak1, pwBreak3);
-        pwBreakSectionColumn2.getChildren().addAll(pwBreak2);
-        pwBreakSectionRow.getChildren().addAll(pwBreakSectionColumn1, pwBreakSectionColumn2);
+        pwBreakSectionRow.getChildren().addAll(pwBreakSectionColumn1);// pwBreakSectionColumn2);
         pwBreakSectionRow.setSpacing(20);
         pwBreakSectionColumn1.setSpacing(5);
         pwBreakSectionColumn2.setSpacing(5);
         Button tryToBreak = new Button("Break");
-        Label tryToBreakPW = new Label("Current Password:   ");
-        Label tryToBreakHash = new Label("Hashed Password:   ");
+
         tryToBreak.setOnAction(e -> {
             if(pwBreak1.isSelected() && password.compareTo("") != 0)
             {
                 hackPassword.bruteForce(password);
+                foundPW.setText("Found Password: " + hackPassword.bruteForce(password));
             }
-            if(pwBreak2.isSelected() && password.compareTo("") != 0) {
-                try {
-                    hackPassword.CalcuateTimeToBrake(password);
-                } catch (FileNotFoundException | UnsupportedEncodingException ex) {
-                    ex.printStackTrace();
-                }
-            }
-
             if(pwBreak3.isSelected() && password.compareTo("") != 0) {
-                try {
-                    System.out.println("Password Found : " + hackPassword.dictionaryAttack(password));
-                } catch (FileNotFoundException ex) {
-                    ex.printStackTrace();
-                }
+                foundPW.setText("Found Password: " + hackPassword.dictionaryAttack(password));
             }
         });
 
@@ -254,19 +283,19 @@ public class EncryptionGUI extends Application {
         P2PSectionColumn.setSpacing(10);
         generatePhrase.setOnAction(e -> {
 
-        plaintextPhrase = phraseInput.getText();
-        String seperator[] = plaintextPhrase.split(" ");
-        List<String> phraseWordList = new ArrayList<String>();
-        phraseWordList = Arrays.asList(seperator);
-        if (phraseWordList.size() > 7)
-        {
-            parsedPhrase = PhraseGenerator.generatePhrase(phraseWordList);
-            P2PPassword.setText("Created Password:   " + parsedPhrase);
-        }
-        else
-        {
-            P2PPassword.setText("Created Password:   Please Enter a phrase that has 8 or more words");
-        }
+            plaintextPhrase = phraseInput.getText();
+            String seperator[] = plaintextPhrase.split(" ");
+            List<String> phraseWordList = new ArrayList<String>();
+            phraseWordList = Arrays.asList(seperator);
+            if (phraseWordList.size() > 7)
+            {
+                parsedPhrase = PhraseGenerator.generatePhrase(phraseWordList);
+                P2PPassword.setText("Created Password:   " + parsedPhrase);
+            }
+            else
+            {
+                message("Please enter a longer phrase");
+            }
         });
 
 
@@ -276,47 +305,39 @@ public class EncryptionGUI extends Application {
         HBox passwordBox = new HBox();
         passwordBox.getChildren().addAll(passwordSize,desiredSize);
 
-        passwordStrengthImage = new ImageView();
-        Image passwordStrengthBar = new Image(EncryptionGUI.class.getResourceAsStream("White.png"));
-        passwordStrengthImage.setImage(passwordStrengthBar);
-        HBox passwordStrengthBox = new HBox();
-        passwordStrengthBox.getChildren().addAll(passwordStrengthLabel,passwordStrengthImage);
-
-        ImageView passwordHashedStrengthImage = new ImageView();
-        Image currentPasswordHashedStrengthImage = new Image(EncryptionGUI.class.getResourceAsStream("White.png"));
-        passwordHashedStrengthImage.setImage(currentPasswordHashedStrengthImage);
-        HBox passwordHashedStrengthBox = new HBox();
-        passwordHashedStrengthBox.getChildren().addAll(passwordHashedStrengthLabel, passwordHashedStrengthImage);
         VBox defaultLayout = new VBox(10);
         defaultLayout.setPadding(new Insets(10,10,10,10));
         defaultLayout.getChildren().addAll(
                 passwordGenerationCharactersText, passwordTypesRow, passwordBox,
-                generatePassword,currentPasswordLabel,passwordTimeToBrakeEstimate, passwordStrengthBox,
-                encryptionSectionText, encryptionSectionRow, generateHash, currentPasswordHash, hashedPasswordTimeToBrakeEstimate,
-                passwordHashedStrengthBox,pwBreakSectionText,pwBreakSectionRow,
-                tryToBreak,tryToBreakPW,tryToBreakHash,P2PSectionText,P2PSectionColumn);
+                generatePassword,currentPasswordLabel,passwordTimeToBrakeEstimate,
+                encryptionSectionText, encryptionSectionRow, generateHash, currentPasswordHash, hashedPasswordTimeToBrakeEstimate
+                ,pwBreakSectionText,pwBreakSectionRow,
+                tryToBreak,tryToBreakPW,foundPW,P2PSectionText,P2PSectionColumn);
 
-        Scene newScene = new Scene(defaultLayout,400,800);
+        Scene newScene = new Scene(defaultLayout,500,800);
         primaryStage.setScene(newScene);
         primaryStage.show();
     }
 
+    /**
+     * The message() method creates a small graphical user interface window for the purpose of displaying a message to the user.
+     * @param message This parameter is a string that is used to display what message the system needs to present to the user.
+     * @return void This method returns nothing
+     */
     public static void message(String message)
     {
         Stage messageStage = new Stage();
         messageStage.setTitle("Error");
-        VBox MessageGrid = new VBox();
+        VBox MessageGrid = new VBox(10);
+        MessageGrid.setAlignment(Pos.CENTER);
         Button Ok = new Button();
         Label messageToDisplay = new Label();
         messageToDisplay.setFont(new Font("Segoe UI",12));
         messageToDisplay.setText(message);
-        messageToDisplay.setTranslateX(85);
-        messageToDisplay.setTranslateY(75);
+        messageToDisplay.setTextAlignment(TextAlignment.JUSTIFY);
 
         Ok.setText("Ok");
         Ok.setOnAction(e -> messageStage.close());
-        Ok.setTranslateX(150);
-        Ok.setTranslateY(90);
         MessageGrid.getChildren().addAll(messageToDisplay, Ok);
         Scene messageScene = new Scene(MessageGrid,350,200);
         messageStage.initModality(Modality.APPLICATION_MODAL);
