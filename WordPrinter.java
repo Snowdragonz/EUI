@@ -22,13 +22,13 @@ public class WordPrinter {
     public static void main(String[] args) {
         String wordSample = "";
         ArrayList<String> LengthWordList = new ArrayList<String>();
-        File file = new File("TotalDataSetsDictionaryWordCount.txt");
+        File file = new File("TotalDataSetsDictionaryCommonPasswordCount.txt");
         try {
             BufferedReader fileToRead = new BufferedReader(new FileReader(file));
             try {
                 while ((wordSample = fileToRead.readLine()) != null) {
                     String[] lengthofWord = wordSample.split("\t");
-                    if (lengthofWord[0].length() == 10) // length variable
+                    if (lengthofWord[0].length() == 15) // length variable
                     {
                         System.out.print(lengthofWord[0] + "\t" + lengthofWord[1] + "\n");
                     }

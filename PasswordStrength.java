@@ -21,14 +21,14 @@ public class PasswordStrength {
      */
     public static String determinePasswordStrength(String password)
     {
-        int passwordlength = password.length();
+        double passwordlength = password.length();
         ArrayList<Long> possibilties= new ArrayList<Long>();
-        BigDecimal countedPossibilities = new BigDecimal("0");
-        BigDecimal totalPossibilties = new BigDecimal("0");
+        double countedPossibilities = 0;
+        double totalPossibilties = 0;
         ArrayList<String> counterArray = new ArrayList<String>();
         String longestMatchingWord = "";
 
-        File fileToRead = new File("dictionary.txt\\");
+        File fileToRead = new File("dictionary.txt");
         boolean hasUpper = false;
         boolean hasLower = false;
         boolean hasNumber = false;
@@ -44,42 +44,44 @@ public class PasswordStrength {
             if("abcdefghijklmnopkrstuvwxyz".contains(Character.toString(password.charAt(i))) && !hasLower)
             {
                 hasLower = true;
-                countedPossibilities = countedPossibilities.add(BigDecimal.valueOf(26));
+                countedPossibilities = countedPossibilities + 26;
             }
             else if("ABCDEFGHIJKLMNOPQRSTUVWXYZ".contains(Character.toString(password.charAt(i))) && !hasUpper)
             {
                 hasUpper = true;
-                countedPossibilities = countedPossibilities.add(BigDecimal.valueOf(26));
+                countedPossibilities = countedPossibilities + 26;
             }
             else if("0123456789".contains(Character.toString(password.charAt(i))) && !hasNumber)
             {
                 hasNumber= true;
-                countedPossibilities = countedPossibilities.add(BigDecimal.valueOf(10));
+                countedPossibilities = countedPossibilities + 10;
             }
             else if(" ,!”#$%&’()*+,-./:;<=>?@[\\]^_`{|}~".contains(Character.toString(password.charAt(i))) && !hasSpecial)
             {
                 hasSpecial = true;
-                countedPossibilities = countedPossibilities.add(BigDecimal.valueOf(33));
+                countedPossibilities = countedPossibilities + 33;
             }
 
         }
-        BigInteger centuries = new BigInteger("0");
-        BigInteger years = new BigInteger("0");
-        BigInteger days = new BigInteger("0");
-        BigInteger hours = new BigInteger("0");
-        BigInteger minutes = new BigInteger("0");
-        BigInteger seconds = new BigInteger("0");
-        BigInteger tempcenturies = new BigInteger("0");
-        BigInteger tempyears = new BigInteger("0");
-        BigInteger tempdays = new BigInteger("0");
-        BigInteger temphours = new BigInteger("0");
-        BigInteger tempminutes = new BigInteger("0");
-        BigDecimal tempseconds2 = new BigDecimal("0");
-        BigInteger tempseconds = new BigInteger("0");
-        BigDecimal point2 = new BigDecimal("0.00000000002");
-        BigDecimal subtract = new BigDecimal("14692");
-        BigInteger fivehundread = new BigInteger("1000");
-        BigInteger zero = new BigInteger("0");
+        double centuries = 0;
+        double years = 0;
+        double days = 0;
+        double hours = 0;
+        double minutes = 0;
+        double seconds = 0;
+        double tempcenturies = 0;
+        double tempyears = 0;
+        double tempdays = 0;
+        double temphours = 0;
+        double tempminutes = 0;
+        double tempseconds2 = 0;
+        double tempseconds = 0;
+        double point = 0.00000037;
+        double point1 = 3.8;
+
+//        BigDecimal E = new BigDecimal(Math.E);
+//        BigInteger fivehundread = new BigInteger("1000");
+//        BigInteger zero = new BigInteger("0");
         //BigDecimal centuries = new BigDecimal("0");
 
         ///////////////INSERT Dictionary Attack Here//////////////////////
@@ -135,45 +137,44 @@ public class PasswordStrength {
         }
 
         // Algorithm is here
-        //long seconds = (long) (12.015 * Math.pow(Math.E, 0.000000000000001*totalPossibilties));
-        //BigDecimal seconds = new BigDecimal(0.00000000002*totalPossibilties - 14692);
+        //y =3.7*e(3.8x) rounded to 4 to fit into big decimal
 
-        totalPossibilties = (countedPossibilities.pow(passwordlength));
-        tempseconds2 = point2.multiply(totalPossibilties).subtract(subtract);
-        tempseconds = tempseconds2.toBigInteger();
+        totalPossibilties = (Math.pow(countedPossibilities, passwordlength));
+        tempseconds2 = point*Math.pow(Math.E, totalPossibilties*4);
+        tempseconds = tempseconds2;
 
-        if (tempseconds.compareTo(zero) == 0)
+        if (tempseconds == 0)
         {
 
         }
-        else if (tempseconds.compareTo(zero) == 1)
+        else if (tempseconds > 1)
         {
 
         }
         else
         {
-            tempseconds = zero;
+            tempseconds = 0;
         }
 
 
-        seconds = tempseconds.mod(BigInteger.valueOf(60));
-        tempminutes = tempseconds.divide(BigInteger.valueOf(60));
-        minutes = tempminutes.mod(BigInteger.valueOf(60));
-        temphours = tempminutes.divide(BigInteger.valueOf(60));
-        hours = temphours.mod(BigInteger.valueOf(24));
-        tempdays = temphours.divide(BigInteger.valueOf(24));
-        days = tempdays.mod(BigInteger.valueOf(365));
-        tempyears = tempdays.divide(BigInteger.valueOf(365));
+        seconds = tempseconds % 60;
+        tempminutes = tempseconds / 60;
+        minutes = tempminutes % 60;
+        temphours = tempminutes / 60;
+        hours = temphours % 24;
+        tempdays = temphours / 24;
+        days = tempdays % 365;
+        tempyears = tempdays / 365;
 
-        if(tempyears.compareTo(fivehundread) == 1)
+        if(tempyears > 500)
         {
-            return ("Greater than 1000" +  " years ");
+            return ("Greater than 500" +  " years ");
         }
         //years = tempcenturies.divide(BigInteger.valueOf(100));
         //System.out.println(tempyears.toString() +  " years " + days.toString() + " days " + hours.toString() + " hours " + minutes.toString() + " minutes " + seconds.toString() + " seconds");
         else
             {
-            return (tempyears.toString() + " years " + days.toString() + " days " + hours.toString() + " hours " + minutes.toString() + " minutes " + seconds.toString() + " seconds");
+            return (tempyears + " years " + days + " days " + hours + " hours " + minutes + " minutes " + seconds + " seconds");
             }
     }
 }

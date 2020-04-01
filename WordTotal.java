@@ -21,10 +21,10 @@ public class WordTotal {
     public static void main(String[] args) {
         String wordSample = "";
         List<CounterObj> LengthWordList = new ArrayList<CounterObj>();
-        File rockyouWords = new File("RockYouDictonaryWordListCount.txt");
-        File mySpaceWords = new File("MySpaceDictonaryWordCount.txt");
-        File HotmailWords = new File("HotmailDictonaryWordCount.txt");
-        File PHPBBwords = new File("PHPBBDictonaryWordCount.txt");
+        File rockyouWords = new File("RockYouDictonaryCommonPasswordCount.txt");
+        File mySpaceWords = new File("MySpaceDictonaryCommonPasswordCount.txt");
+        File HotmailWords = new File("HotmailDictonaryCommonPasswordCount.txt");
+        File PHPBBwords = new File("PHPBBDictonaryCommonPasswordCount.txt");
 
         try {
             BufferedReader fileToRead = new BufferedReader(new FileReader(PHPBBwords));
@@ -38,6 +38,7 @@ public class WordTotal {
                         temp.counter = Integer.parseInt(lengthofWord[1]);
                         LengthWordList.add(temp);
                     }
+                    System.out.println(fileToRead.toString());
 
                 }
 
@@ -62,14 +63,17 @@ public class WordTotal {
                         temp.counter = Integer.parseInt(lengthofWord[1]);
                         LengthWordList.add(temp);
                     }
+                    System.out.println(fileToRead.toString());
                     found = false;
                     countertemp++;
+                    System.out.println(countertemp);
 
                 }
 
 
                 fileToRead = new BufferedReader(new FileReader(HotmailWords));
                 found = false;
+                countertemp = 0;
                 while ((wordSample = fileToRead.readLine()) != null) {
                     String[] lengthofWord = wordSample.split("\t");
                     for (int i = 0; i < LengthWordList.size(); i++)
@@ -87,12 +91,14 @@ public class WordTotal {
                         temp.counter = Integer.parseInt(lengthofWord[1]);
                         LengthWordList.add(temp);
                     }
+                    System.out.println(fileToRead.toString());
                     found = false;
                     countertemp++;
                 }
 
                 fileToRead = new BufferedReader(new FileReader(rockyouWords));
                 found = false;
+                countertemp = 0;
                 while ((wordSample = fileToRead.readLine()) != null) {
                     String[] lengthofWord = wordSample.split("\t");
                     for (int i = 0; i < LengthWordList.size(); i++)
@@ -110,8 +116,10 @@ public class WordTotal {
                         temp.counter = Integer.parseInt(lengthofWord[1]);
                         LengthWordList.add(temp);
                     }
+                    System.out.println(fileToRead.toString());
                     found = false;
                     countertemp++;
+                    System.out.println(countertemp);
                 }
             }
             catch (IOException e)
@@ -150,7 +158,7 @@ public class WordTotal {
 
                 // Open given file in append mode.
                 BufferedWriter out = new BufferedWriter(
-                        new FileWriter("TotalDataSetsDictionaryWordCount.txt", true));
+                        new FileWriter("TotalDataSetsDictionaryCommonPasswordCount.txt", true));
                 out.write(LengthWordList.get(i).word + "\t" + LengthWordList.get(i).counter + "\n");
                 out.close();
             }

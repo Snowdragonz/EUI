@@ -22,20 +22,20 @@ public class Finder {
     public static void main(String[] args)
     {
         int countItr = 0;
-        CounterObj[] counterArray = new CounterObj[466550];
+        CounterObj[] counterArray = new CounterObj[9999];
         List<CounterObj> phraseWordList = new ArrayList<CounterObj>();
-        File fileToRead = new File("dictionary.txt");
+        File fileToRead = new File("10-million-password-list-top-10000.txt");
 
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fileToRead));
             String wordInFile = "";
 
-            for(int i = 0; i < 466550; ++i)
+            for(int i = 0; i < 9999; ++i)
             {
                 counterArray[i] = new CounterObj();
             }
 
-            for(int i = 0; i < 466550; i++)
+            for(int i = 0; i < 9999; i++)
             {
                 try
                 {
@@ -44,7 +44,7 @@ public class Finder {
 
                     if(wordInFile.length() > 2)
                     {
-                        System.out.println(wordInFile);
+                        //System.out.println(wordInFile);
                         counterArray[i].word = wordInFile.toString();
                         counterArray[i].counter = 0;
                     }
@@ -83,7 +83,7 @@ public class Finder {
                 {
                     System.out.println(wordToCount);
 
-                    for(int i = 0; i < 466550; i++)
+                    for(int i = 0; i < 9999; i++)
                     {
                         wordToCount = wordToCount.toLowerCase();
                         if(wordToCount.contains(counterArray[i].word))
@@ -92,6 +92,7 @@ public class Finder {
                         }
                     }
                     countItr++;
+                    System.out.println(countItr);
                 }
             }
             catch (IOException n)
@@ -125,13 +126,13 @@ public class Finder {
         }
 
 
-        for(int i = 0; i < 466550; ++i)
+        for(int i = 0; i < 9999; ++i)
         {
             try {
 
                 // Open given file in append mode.
                 BufferedWriter out = new BufferedWriter(
-                        new FileWriter("HotmailDictonaryWordCount.txt", true));
+                        new FileWriter("HotmailDictonaryCommonPasswordCount.txt", true));
                 out.write(counterArray[i].word + "\t" + counterArray[i].counter + "\n");
                 out.close();
             }
